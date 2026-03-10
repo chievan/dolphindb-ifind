@@ -1,0 +1,56 @@
+try { loadPlugin("httpClient") } catch(ex) {}
+use ifind
+
+try {
+    params = concat(file("token.json").readLines(), "")
+    tokenDict = fromJson(params)
+    refreshToken = tokenDict["token"]
+} catch(ex) {
+    refreshToken = "YOUR_TOKEN_HERE" // 请在本地创建token.json并将token放在里面，或者直接在这里替换
+}
+
+// ----------------------------------------------------
+// 1. THS_HQ - 历史行情查询 (History Quotation)
+// 说明: 获取指定股票的历史行情数据。
+// 参数: 加上 "time" 即可显示日期。
+// ----------------------------------------------------
+print("=== [1/5] 测试 THS_HQ (历史行情) ===")
+tb1 = ifind::THS_HQ(refreshToken, "600519.SH", "time,open,high,low,close,volume,amount", "Fill:Original", "2026-03-09", "2026-03-10")
+print("返回行数: " + string(tb1.rows()))
+print(tb1)
+
+// ----------------------------------------------------
+// 2. THS_DS - 日期序列查询 (Date Serial)
+// ----------------------------------------------------
+print("\n=== [2/5] 测试 THS_DS (日期序列-市盈率TTM) ===")
+tb2 = ifind::THS_DS(refreshToken, "600519.SH", "ths_pe_ttm_stock", "", "", "2026-03-01", "2026-03-09")
+print("返回行数: " + string(tb2.rows()))
+print(tb2)
+
+// ----------------------------------------------------
+// 3. THS_BD - 基础数据查询 (Basic Data)
+// ----------------------------------------------------
+print("\n=== [3/5] 测试 THS_BD (基础数据) ===")
+tb3 = ifind::THS_BD(refreshToken, "600519.SH", "ths_stock_short_name_stock,ths_listing_date_stock", "")
+print("返回行数: " + string(tb3.rows()))
+print(tb3)
+
+// ----------------------------------------------------
+// 4. THS_RQ - 实时行情查询 (Real-time Quotation)
+// ----------------------------------------------------
+print("\n=== [4/5] 测试 THS_RQ (实时行情) ===")
+tb4 = ifind::THS_RQ(refreshToken, "600519.SH", "open,high,low,latest")
+print("返回行数: " + string(tb4.rows()))
+print(tb4)
+
+// ----------------------------------------------------
+// 5. THS_HF - 高频行情查询 (High Frequency)
+// ----------------------------------------------------
+print("\n=== [5/5] 测试 THS_HF (高频行情-5分钟) ===")
+tb5 = ifind::THS_HF(refreshToken, "600519.SH", "close,volume", "Fill:Original,Interval:5", "2026-03-09 09:30:00", "2026-03-09 15:00:00")
+print("返回行数: " + string(tb5.rows()))
+print(tb5)
+
+print("\n====================================================")
+print("  所有测试执行完毕  ")
+print("====================================================")
