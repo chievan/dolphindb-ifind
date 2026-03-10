@@ -15,7 +15,7 @@ try {
 // 参数: 加上 "time" 即可显示日期。
 // ----------------------------------------------------
 print("=== [1/5] 测试 THS_HQ (历史行情) ===")
-tb1 = ifind::THS_HQ(refreshToken, "600519.SH", "time,open,high,low,close,volume,amount", "Fill:Original", "2026-03-09", "2026-03-10")
+tb1 = ifind::THS_HQ(refreshToken, "600519.SH", "time,open,high,low,close,volume,amount", "Fill:Original", "2026-03-01", "2026-03-10")
 print("返回行数: " + string(tb1.rows()))
 print(tb1)
 
