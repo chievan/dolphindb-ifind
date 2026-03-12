@@ -13,32 +13,32 @@ print("AccessToken 获取成功: " + accToken.left(10) + "...")
 
 @testing:case = "test_THS_HQ"
 print("=== [1/8] 测试 THS_HQ (历史行情) ===")
-tb1 = ifind::THS_HQ(accToken, "600519.SH", "open,high,low,close,volume", "Fill:Original", "2026-03-01", "2026-03-05")
+tb1 = ifind::THS_HQ(accToken, "600519.SH,600518.SH", "open,high,low,close,volume", "Fill:Original", "2026-03-01", "2026-03-05")
 assert 1, tb1.rows() > 0
 print("THS_HQ 验证通过")
 
 @testing:case = "test_THS_DS"
 print("\n=== [2/8] 测试 THS_DS (日期序列) ===")
-tb2 = ifind::THS_DS(accToken, "600519.SH", "ths_pe_ttm_stock", "", "", "2026-02-01", "2026-03-01")
+tb2 = ifind::THS_DS(accToken, "600519.SH,600518.SH", "ths_pe_ttm_stock,ths_pb_latest_stock,ths_turnover_ratio_stock,ths_amt_stock", "100;100;;", "", "2026-02-01", "2026-03-01")
 assert 2, tb2.rows() > 0
 print("THS_DS 验证通过")
 
 @testing:case = "test_THS_HF"
 print("\n=== [3/8] 测试 THS_HF (高频行情) ===")
-tb3 = ifind::THS_HF(accToken, "600519.SH", "open,high,low,close,volume", "Interval:1,Fill:Original", "2026-03-11 09:30:00", "2026-03-11 15:00:00")
+tb3 = ifind::THS_HF(accToken, "600519.SH,600518.SH", "open,high,low,close,volume", "Interval:1,Fill:Original", "2026-03-11 09:30:00", "2026-03-11 15:00:00")
 assert 3, tb3.rows() >= 0
 print("THS_HF 验证完成")
 
 @testing:case = "test_THS_BD"
 print("\n=== [4/8] 测试 THS_BD (基础数据) ===")
-tb4 = ifind::THS_BD(accToken, "600519.SH", "ths_stock_short_name_stock")
-assert 4, tb4.rows() == 1
+tb4 = ifind::THS_BD(accToken, "600519.SH,600518.SH", "ths_stock_short_name_stock")
+assert 4, tb4.rows() == 2
 print("THS_BD 验证通过")
 
 @testing:case = "test_THS_RQ"
 print("\n=== [5/8] 测试 THS_RQ (实时行情) ===")
-tb5 = ifind::THS_RQ(accToken, "600519.SH", "latest")
-assert 5, tb5.rows() == 1
+tb5 = ifind::THS_RQ(accToken, "600519.SH,600518.SH", "latest")
+assert 5, tb5.rows() == 2
 print("THS_RQ 验证通过")
 
 @testing:case = "test_module_info"
